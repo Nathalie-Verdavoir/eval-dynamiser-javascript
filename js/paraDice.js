@@ -35,3 +35,23 @@ const newGame = () => {
     currentP2Html.textContent = gameStat["p2"]["current"];
 }
 newGame();
+
+const dicesArray = document.getElementsByClassName("dice");
+
+const roll = () => {
+    //get a random number from 1 to 6
+    let result = Math.floor(Math.random()*6)+1;
+    newDiceId = 'dice-'+result;
+    //console.log(newDiceId);
+    displayResult(newDiceId);
+ };
+
+const displayResult = (newDiceId) => {
+     //hide (with d-none) all of the svg of dices and show the picked one 
+    Array
+        .from(dicesArray)
+        .forEach( d => {
+            d.classList.add('d-none');
+        })
+    document.getElementById(newDiceId).classList.remove('d-none');
+};
