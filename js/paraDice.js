@@ -49,15 +49,27 @@ const roll = () => {
 const dicesArray = document.getElementsByClassName("dice");
 
 const displayResult = (result) => {
-    //hide (with d-none) all of the svg of dices and show the picked one 
+    //hide (with d-none) all of the svg of dices 
     [...dicesArray]
         .forEach( d => {
             d.classList.add('d-none');
         }) 
+    //and show the picked one 
     let newDiceId = 'dice-'+result;
     document.getElementById(newDiceId).classList.remove('d-none');
-    addTo(result, 'current', getActivePlayerId());
+    //then add result to current score
+    if(result==1){
+        looserDice();
+    } else {
+        addTo(result, 'current', getActivePlayerId());
+    }
 };
+
+const looserDice = () => {
+    gameStat[getActivePlayerId()]['current']=0;
+    setContent( 'current-'+getActivePlayerId(), getGameStat(getActivePlayerId()) );
+    changeActivePlayer();
+}
 
 const addTo = (howMany, toCounter, toPlayer) => {
     if( toCounter==='global') {
