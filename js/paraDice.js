@@ -21,7 +21,7 @@ myButtonsHtml.forEach(myBtn => {
         eval(functionToCall);
     })
 });
-
+//#TODO get following lines lighter (until line 37)
 const globalP1Html = document.getElementById("global-p1");
 const globalP2Html = document.getElementById("global-p2");
 const currentP1Html = document.getElementById("current-p1");
@@ -46,7 +46,10 @@ const roll = () => {
 
 const displayResult = (result) => {
     //hide (with d-none) all of the svg of dices and show the picked one 
+    
     newDiceId = 'dice-'+result;
+    
+    //#TODO check for a better way to change class
     Array
         .from(dicesArray)
         .forEach( d => {
@@ -63,7 +66,26 @@ const addTo = (howMany, toCounter, toPlayer) => {console.log(toPlayer);
 
 const getActivePlayerId = () => {
     //get the active player
+    //#TODO ternary operator?
     if(document.getElementById('name-p1').classList.contains('active'))
     {return 'p1'}else{return 'p2'}
+}
+
+const changeActivePlayer = () => {
+    //#TODO get it better and smaller
+    getActivePlayerId()=='p1' ? 
+    (
+        document.getElementById('name-p1').classList.remove('active'),
+        document.getElementById('name-p2').classList.add('active'),
+        document.getElementById('bg-p1').classList.remove('active'),
+        document.getElementById('bg-p2').classList.add('active')
+    )
+    : 
+    (
+       document.getElementById('name-p2').classList.remove('active'),
+       document.getElementById('name-p1').classList.add('active'),
+       document.getElementById('bg-p2').classList.remove('active'),
+       document.getElementById('bg-p1').classList.add('active')
+   );
 }
 
