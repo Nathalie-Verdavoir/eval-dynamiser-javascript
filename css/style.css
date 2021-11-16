@@ -2,9 +2,8 @@
     font-family: lato;
     font-style:normal;
     font-weight:200;
-    src:url(../images/fonts/Lato/Lato-Regular.ttf) format('truetype');
+    src:url(../images/fonts/Lato-Light.ttf) format('truetype');
 }
-
 
 :root {
     --color-white: #ffffff;
@@ -16,4 +15,41 @@
 body {
     font-family: 'lato';
     color: var(--color-grey);
+}
+
+.background {
+    width: 100vw;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    position: absolute;
+}
+
+.background div {
+    flex: 1;
+}
+
+.background div.active {
+    background-color: var(--color-pink);
+    opacity: 30%;
 } 
+
+main {
+    z-index: 1;
+    position: relative;
+}
+
+.pink {
+    color: var(--color-pink);
+    font-size: 3rem;
+    margin: 0.5rem;
+}
+
+svg.pink {
+    width: 20px;
+    height: 20px;
+}
+
+.pink path {
+    color: var(--color-pink);
+}
