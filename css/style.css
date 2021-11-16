@@ -54,14 +54,22 @@ svg.pink {
     color: var(--color-pink);
 }
 
+.player {
+    font-size: 3rem;
+}
+
 .player>svg {
-    width: 12px;
-    margin: 1rem;
+    width: 20px;
+    margin: 0.5rem;
     align-items: center
 }
 
+.player:not(.active){
+    color: var(--color-light-grey);
+}
+
 .player:not(.active)>svg{
-    display: none;
+    visibility: hidden;
 }
 
 .dice {
@@ -72,4 +80,17 @@ svg.pink {
 
 .dice-dots {
     color: var(--color-red); 
+}
+
+.red,
+.red p {
+    width: 15vw;
+    font-size: 3rem;
+    background-color: var(--color-red);
+    color: var(--color-white);
+}
+
+.red p:first-child {
+    color: var(--color-grey); 
+    font-size: 0.9rem;
 }
