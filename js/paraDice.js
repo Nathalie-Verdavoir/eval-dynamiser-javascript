@@ -41,17 +41,29 @@ const dicesArray = document.getElementsByClassName("dice");
 const roll = () => {
     //get a random number from 1 to 6
     let result = Math.floor(Math.random()*6)+1;
-    newDiceId = 'dice-'+result;
-    //console.log(newDiceId);
-    displayResult(newDiceId);
- };
+    displayResult(result);
+};
 
-const displayResult = (newDiceId) => {
-     //hide (with d-none) all of the svg of dices and show the picked one 
+const displayResult = (result) => {
+    //hide (with d-none) all of the svg of dices and show the picked one 
+    newDiceId = 'dice-'+result;
     Array
         .from(dicesArray)
         .forEach( d => {
             d.classList.add('d-none');
         })
     document.getElementById(newDiceId).classList.remove('d-none');
+    addTo(result, 'current', getActivePlayerId());
 };
+
+const addTo = (howMany, toCounter, toPlayer) => {console.log(toPlayer);
+    gameStat[toPlayer][toCounter]+=howMany;
+    document.getElementById('current-'+toPlayer).textContent=gameStat[toPlayer][toCounter];
+}
+
+const getActivePlayerId = () => {
+    //get the active player
+    if(document.getElementById('name-p1').classList.contains('active'))
+    {return 'p1'}else{return 'p2'}
+}
+
