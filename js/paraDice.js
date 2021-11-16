@@ -58,8 +58,12 @@ const displayResult = (result) => {
 };
 
 const addTo = (howMany, toCounter, toPlayer) => {
+    if( toCounter==='global') {
+        gameStat[toPlayer]["current"]=0; 
+        setContent( 'current-'+toPlayer, 0);
+    }
     gameStat[toPlayer][toCounter]+=howMany;
-    document.getElementById('current-'+toPlayer).textContent=gameStat[toPlayer][toCounter];
+    setContent( toCounter+'-'+toPlayer, getGameStat( toPlayer , toCounter ) );
 }
 
 const getActivePlayerId = () => {
@@ -73,6 +77,17 @@ const changeActivePlayer = () => {
     arrElementToActive.forEach(el => {
         document.getElementById(el).classList.toggle("active");
     })
+}
+
+const hold = () => {
+    if ( getGameStat(getActivePlayerId()) > 0 ) {
+    addTo(getGameStat(getActivePlayerId()), 'global', getActivePlayerId());
+    }
+    if ( getGameStat(getActivePlayerId(),'global') >= 100 ) { 
+        setContent( 'winner', document.getElementById("name-"+getActivePlayerId()).textContent+' WINS')
+        } else {
+        changeActivePlayer();
+    }
 }
 
 newGame();
