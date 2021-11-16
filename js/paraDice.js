@@ -57,34 +57,22 @@ const displayResult = (result) => {
     addTo(result, 'current', getActivePlayerId());
 };
 
-const addTo = (howMany, toCounter, toPlayer) => {console.log(toPlayer);
+const addTo = (howMany, toCounter, toPlayer) => {
     gameStat[toPlayer][toCounter]+=howMany;
     document.getElementById('current-'+toPlayer).textContent=gameStat[toPlayer][toCounter];
 }
 
 const getActivePlayerId = () => {
-    //get the active player
-    //#TODO ternary operator?
-    if(document.getElementById('name-p1').classList.contains('active'))
-    {return 'p1'}else{return 'p2'}
+    return document.getElementById('name-p1').classList.contains('active')==true ?
+   'p1' : 'p2';
 }
 
+const arrElementToActive = ["name-p1","name-p2","bg-p1","bg-p2"];
+
 const changeActivePlayer = () => {
-    //#TODO get it better and smaller
-    getActivePlayerId()=='p1' ? 
-    (
-        document.getElementById('name-p1').classList.remove('active'),
-        document.getElementById('name-p2').classList.add('active'),
-        document.getElementById('bg-p1').classList.remove('active'),
-        document.getElementById('bg-p2').classList.add('active')
-    )
-    : 
-    (
-       document.getElementById('name-p2').classList.remove('active'),
-       document.getElementById('name-p1').classList.add('active'),
-       document.getElementById('bg-p2').classList.remove('active'),
-       document.getElementById('bg-p1').classList.add('active')
-   );
+    arrElementToActive.forEach(el => {
+        document.getElementById(el).classList.toggle("active");
+    })
 }
 
 newGame();
