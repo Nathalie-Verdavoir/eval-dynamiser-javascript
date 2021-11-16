@@ -3,16 +3,7 @@
 /*--------FOR STUDI---------*/
 /*--------20211116----------*/
 
-gameStat = {
-    p1 :{
-        global : 0,
-        current : 0,
-    },
-    p2 :{
-        global : 0,
-        current : 0,
-    }
-};
+let gameStat = {};
 const myButtonsHtml = document.querySelectorAll("button");
 
 myButtonsHtml.forEach(myBtn => {
@@ -21,32 +12,42 @@ myButtonsHtml.forEach(myBtn => {
         eval(functionToCall);
     })
 });
-//#TODO get following lines lighter (until line 37)
-const globalP1Html = document.getElementById("global-p1");
-const globalP2Html = document.getElementById("global-p2");
-const currentP1Html = document.getElementById("current-p1");
-const currentP2Html = document.getElementById("current-p2");
 
+const setContent = (target, text) => {
+    document.getElementById(target).textContent = text;
+}
+
+const getGameStat = (playerId, cat) => {
+    cat = cat || "current";
+    return gameStat[playerId][cat];
+}
 
 const newGame = () => {
-    globalP1Html.textContent = gameStat["p1"]["global"];
-    globalP2Html.textContent = gameStat["p2"]["global"];
-    currentP1Html.textContent = gameStat["p1"]["current"];
-    currentP2Html.textContent = gameStat["p2"]["current"];
+    gameStat = {
+        p1 :{
+            global : 0,
+            current : 0,
+        },
+        p2 :{
+            global : 0,
+            current : 0,
+        }
+    };
+    setContent( "global-p1", getGameStat('p1','global'));
+    setContent( "global-p2", getGameStat('p2','global'));
+    setContent( "current-p1", getGameStat('p1'));
+    setContent( "current-p2", getGameStat('p2'));
 }
-newGame();
 
 const dicesArray = document.getElementsByClassName("dice");
 
 const roll = () => {
-    //get a random number from 1 to 6
     let result = Math.floor(Math.random()*6)+1;
     displayResult(result);
 };
 
 const displayResult = (result) => {
     //hide (with d-none) all of the svg of dices and show the picked one 
-    
     newDiceId = 'dice-'+result;
     
     //#TODO check for a better way to change class
@@ -89,3 +90,4 @@ const changeActivePlayer = () => {
    );
 }
 
+newGame();
