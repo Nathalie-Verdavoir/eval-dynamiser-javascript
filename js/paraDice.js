@@ -37,6 +37,8 @@ const newGame = () => {
     setContent( "global-p2", getGameStat('p2','global'));
     setContent( "current-p1", getGameStat('p1'));
     setContent( "current-p2", getGameStat('p2'));
+    toggleButtons();
+    displayResult(0);
 }
 
 const roll = () => {
@@ -84,10 +86,20 @@ const hold = () => {
     addTo(getGameStat(getActivePlayerId()), 'global', getActivePlayerId());
     }
     if ( getGameStat(getActivePlayerId(),'global') >= 100 ) { 
+        toggleButtons();
         setContent( 'winner', document.getElementById("name-"+getActivePlayerId()).textContent+' WINS')
         } else {
         changeActivePlayer();
     }
+}
+
+const toggleButtons = () => {
+    myButtonsHtml.forEach(myBtn => {
+        if(myBtn.getAttribute('data-action')!="newGame"){
+            myBtn.classList.toggle('invisible');
+        }
+    })
+    document.getElementById('winner').classList.toggle('invisible');
 }
 
 newGame();
