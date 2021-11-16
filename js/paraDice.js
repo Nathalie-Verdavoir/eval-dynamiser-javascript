@@ -39,23 +39,20 @@ const newGame = () => {
     setContent( "current-p2", getGameStat('p2'));
 }
 
-const dicesArray = document.getElementsByClassName("dice");
-
 const roll = () => {
     let result = Math.floor(Math.random()*6)+1;
     displayResult(result);
 };
 
+const dicesArray = document.getElementsByClassName("dice");
+
 const displayResult = (result) => {
     //hide (with d-none) all of the svg of dices and show the picked one 
-    newDiceId = 'dice-'+result;
-    
-    //#TODO check for a better way to change class
-    Array
-        .from(dicesArray)
+    [...dicesArray]
         .forEach( d => {
             d.classList.add('d-none');
-        })
+        }) 
+    let newDiceId = 'dice-'+result;
     document.getElementById(newDiceId).classList.remove('d-none');
     addTo(result, 'current', getActivePlayerId());
 };
