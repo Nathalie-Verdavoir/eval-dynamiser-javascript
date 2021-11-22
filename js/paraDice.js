@@ -4,12 +4,24 @@
 /*--------20211116----------*/
 
 let gameStat = {};
+
 const myButtonsHtml = document.querySelectorAll("button");
+
+const changePseudo1 = () => {
+    gameStat["p1"]["pseudo"]= document.getElementById("pseudop1Input").value;
+    setContent( "pseudo-p1", getGameStat('p1','pseudo'));
+}
+
+const changePseudo2 = () => {
+    gameStat["p2"]["pseudo"]= document.getElementById("pseudop2Input").value;
+    setContent( "pseudo-p2", getGameStat('p2','pseudo'));
+}
 
 myButtonsHtml.forEach(myBtn => {
     myBtn.addEventListener('click', (e) => {
+        if(e.target.getAttribute('data-action')){
         let functionToCall = e.target.getAttribute('data-action')+'()';
-        eval(functionToCall);
+        eval(functionToCall);}
     })
 });
 
@@ -17,17 +29,22 @@ const setContent = (target, text) => document.getElementById(target).textContent
 
 const getGameStat = (playerId, cat='current') => gameStat[playerId][cat];
 
-const newGame = () => {
+
+const newGame = () => { 
+
+    const pseudo1 = gameStat["p1"] ? getGameStat('p1','pseudo') : 'PLAYER 1';
+    const pseudo2 = gameStat["p2"] ? getGameStat('p2','pseudo') : 'PLAYER 2';
+
     gameStat = {
         p1 :{
             global : 0,
             current : 0,
-            pseudo: 'PLAYER 1'
+            pseudo: pseudo1,
         },
         p2 :{
             global : 0,
             current : 0,
-            pseudo: 'PLAYER 2'
+            pseudo: pseudo2,
         }
     };
     
@@ -37,13 +54,15 @@ const newGame = () => {
     setContent( "global-p2", getGameStat('p2','global'));
     setContent( "current-p1", getGameStat('p1'));
     setContent( "current-p2", getGameStat('p2'));
-    toggleButtons();
+    toggleElement('roll');
+    document.getElementById('hold').classList.add('invisible');
     displayResult(0);
 }
 
 const roll = () => {
     let result = Math.floor(Math.random()*6)+1;
     displayResult(result);
+    
 };
 
 const dicesArray = document.getElementsByClassName("dice");
@@ -60,8 +79,9 @@ const displayResult = (result) => {
     //then add result to current score
     if(result==1){
         looserDice();
-    } else {
+    } else if(result!=0) {
         addTo(result, 'current', getActivePlayerId());
+        document.getElementById('hold').classList.remove('invisible');
     }
 };
 
@@ -86,7 +106,8 @@ const arrElementToActive = ["name-p1","name-p2","bg-p1","bg-p2"];
 
 const changeActivePlayer = () => {
     arrElementToActive.forEach(el => {
-        document.getElementById(el).classList.toggle("active");
+        document.getElementById(el).classList.toggle("active"); 
+        document.getElementById('hold').classList.add('invisible');
     })
 }
 
@@ -95,20 +116,13 @@ const hold = () => {
     addTo(getGameStat(getActivePlayerId()), 'global', getActivePlayerId());
     }
     if ( getGameStat(getActivePlayerId(),'global') >= 100 ) { 
-        toggleButtons();
-        setContent( 'winner', document.getElementById("name-"+getActivePlayerId()).textContent+' WINS')
+        toggleElement('winner');
+        setContent( 'winner',  getGameStat(getActivePlayerId(),'pseudo')+' is the winner! Congrats!!!')
         } else {
         changeActivePlayer();
     }
 }
 
-const toggleButtons = () => {
-    myButtonsHtml.forEach(myBtn => {
-        if(myBtn.getAttribute('data-action')!="newGame"){
-            myBtn.classList.toggle('invisible');
-        }
-    })
-    document.getElementById('winner').classList.toggle('invisible');
-}
+const toggleElement = (id) => document.getElementById(id).classList.toggle('invisible');
 
 newGame();
