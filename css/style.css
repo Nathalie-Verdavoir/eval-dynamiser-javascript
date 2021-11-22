@@ -130,18 +130,104 @@ svg.pink {
 
 @keyframes announce {
     0% {
-      transform: translate3d(100vw,0,0);
+        transform: translate3d(100vw,0,0);
     }
     100% {
-      transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+    }
+}
+
+.animatedScorep1,
+.animatedScorep2 {
+    animation: anime-score 0.3s linear ;
+}
+ 
+ .p1AddingDice {
+    animation: dice-p1 0.3s linear ;
+ }
+ 
+ .p2AddingDice {
+    animation: dice-p2 0.3s linear ;
+ }
+ 
+@keyframes anime-score {
+    0% {
+        transform: translate3d(0,0,0);
+    }
+    50% {
+        transform: translate3d(0, -62px, -135px);
+    }
+    100% {
+        transform: translate3d(0,0,0);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    :root {
+        --mov-Y-small: 7vh;
+    }
+
+    .animatedScorep1,
+    .p1AddingDice {
+        animation: small-p1 0.3s linear ;
+    }
+
+    .animatedScorep2, 
+    .p2AddingDice {
+        animation: small-p2 0.3s linear ;
+    }
+    
+    body { 
+       font-size: 0.5em; 
+    }
+ }
+
+@keyframes dice-p1 {
+    0% {
+        transform: translate3d(0,0,0);
+    }
+    50% {
+        transform: scale(0.5) translate3d(-30vw, 40vh, 1000px);
+    }
+    100% {
+        transform: translate3d(0,0,0);
+    }
+}
+
+@keyframes dice-p2 {
+    0% {
+        transform: translate3d(0,0,0);
+    }
+    50% {
+        transform: scale(0.5) translate3d(30vw, 40vh, 1000px);
+    }
+    100% {
+        transform: translate3d(0,0,0);
+    }
+}
+
+@keyframes small-p1 {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(calc(var(--mov-Y-small) * -1));
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes small-p2 {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(var(--mov-Y-small));
+    }
+    100% {
+        transform: translateY(0);
     }
 }
 
 
-@media only screen and (max-width: 768px) {
-
-    body { 
-       font-size: 0.5em; 
-    }
- 
- }
