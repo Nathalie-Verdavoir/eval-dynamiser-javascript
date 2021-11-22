@@ -9,12 +9,23 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="background d-flex">
+    <div class="background d-flex flex-column flex-md-row">
         <div id="bg-p1" class="p-1 active"></div>
         <div id="bg-p2" class="p-1"></div>
     </div>
     <main>
-        <div class="d-flex justify-content-evenly">
+        <div id="winner" class="announcement">
+            WELCOME IN PARADICE !
+        </div>
+        <div class="fixed-bottom">
+            &copy;PARADICE designed by Nathalie Verdavoir for Studi <a href="https://github.com/Nathalie-Verdavoir/eval-html-css-bootstrap">
+                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-github pink" viewBox="0 0 16 16">
+                    <title>GitHub of this project</title> 
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+            </a>
+        </div>
+        <div class="d-flex justify-content-evenly pb-md-2 mt-5">
             <button data-action="newGame" class="d-flex align-items-center btn btn-outline">
                 <svg class="pink" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -23,72 +34,132 @@
                 NEW GAME
             </button>
         </div>
-        <div class="d-flex justify-content-around align-items: center">
-            <div id="name-p1" class="player active">
-                PLAYER 1
-                <svg xmlns="http://www.w3.org/2000/svg" fill="red" class="bi bi-circle-fill" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8"/></svg>
+        <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="card col-12 col-md-4 d-flex text-center border border-0 bg-transparent">
+                <div>
+                    <div id="name-p1" class="player my-0 my-md-3 active d-inline-block">
+                        <!-- Trigger the modal with a button -->
+                        <button type="button" class="m-0 p-0 border border-0 bg-transparent pink edit-button1 position-absolute" data-bs-toggle="modal" data-bs-target="#pseudo1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                        </button>
+                        <span id="pseudo-p1" ></span>
+                        <span class="active-mark1 mark"></span>
+                    </div>
+                </div>
+                <div id="global-p1" class="pink text my-3"></div>
+                <div class="my-4">
+                    <div class="red d-inline-block px-5">
+                        <p class="text-center pt-2 px-2">CURRENT</p>
+                        <p id="current-p1" class="text-center"></p>
+                    </div>
+                </div>
             </div>
-            <div id="name-p2" class="player">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="red" class="bi bi-circle-fill" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8"/></svg>
-                PLAYER 2
-            </div>
-        </div>
-        <div class="d-flex justify-content-evenly  align-items-center m-4">
-            <div id="global-p1" class="pink"></div>
-            <div>
-                <svg id="dice-1" class="dice d-none" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-dice-1" viewBox="0 0 16 16">
-                    <circle class="dice-dots" cx="8" cy="8" r="1.5"/>
-                </svg>
-                <svg id="dice-2" class="dice d-none" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-dice-2" viewBox="0 0 16 16">
-                   <path class="dice-dots" d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                </svg>
-                <svg id="dice-3" class="dice d-none" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-dice-3" viewBox="0 0 16 16">
-                    <path class="dice-dots" d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-4-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                </svg>
-                <svg id="dice-4" class="dice d-none"  xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-dice-4" viewBox="0 0 16 16">
-                    <path class="dice-dots" d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                </svg>
-                <svg id="dice-5" class="dice d-none" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-dice-5" viewBox="0 0 16 16">
-                    <path class="dice-dots" d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm4-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                </svg>
-                <svg id="dice-6" class="dice d-none" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-dice-6" viewBox="0 0 16 16">
-                    <path class="dice-dots" d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-8 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                </svg>
-                <svg id="dice-0" class="dice" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi" viewBox="0 0 16 16">
-                </svg>
-            </div>
-            <div id="global-p2" class="pink"></div>
-        </div>
-        <div class="d-flex justify-content-evenly align-items-center m-4">
-            <div class="red">
-               <p class="text-center pt-2 px-5">CURRENT</p>
-               <p id="current-p1" class="text-center"></p>
-            </div>
-            <div>
-                <button data-action="roll" class="d-flex align-items-center btn btn-outline">
-                    <svg class="pink" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
-                        <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
-                        <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+            <div class="card col-12 col-md-3 pb-0 border border-0 bg-transparent align-items-center d-flex">
+                <div class="my-0 my-md-5">
+                    <svg id="dice-1" class="dice d-none" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-dice-1" viewBox="0 0 16 16">
+                        <circle class="dice-dots" cx="8" cy="8" r="1.5"/>
                     </svg>
-                    ROLL DICE
-                </button>
-                <button data-action="hold" class="d-flex align-items-center btn btn-outline">
-                    <svg class="pink" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/>
-                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                    <svg id="dice-2" class="dice d-none" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-dice-2" viewBox="0 0 16 16">
+                    <path class="dice-dots" d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                     </svg>
-                    HOLD
-                </button>
+                    <svg id="dice-3" class="dice d-none" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-dice-3" viewBox="0 0 16 16">
+                        <path class="dice-dots" d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-4-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                    <svg id="dice-4" class="dice d-none"  xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-dice-4" viewBox="0 0 16 16">
+                        <path class="dice-dots" d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                    <svg id="dice-5" class="dice d-none" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-dice-5" viewBox="0 0 16 16">
+                        <path class="dice-dots" d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm4-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                    <svg id="dice-6" class="dice d-none" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-dice-6" viewBox="0 0 16 16">
+                        <path class="dice-dots" d="M5.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-8 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                    <svg id="dice-0" class="dice" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi" viewBox="0 0 16 16">
+                    </svg>
+                </div>
+                <div class="d-flex flex-md-column justify-content-around col-12">
+                    <button id="roll" data-action="roll" class="btn btn-outline d-flex justify-content-center align-items-center">
+                        <svg class="pink" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+                            <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+                        </svg>
+                        ROLL DICE
+                    </button>
+                    <button id="hold" data-action="hold" class="btn btn-outline d-flex justify-content-center align-items-center">
+                        <svg class="pink" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/>
+                            <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                        </svg>
+                        HOLD
+                    </button>
+                </div>
             </div>
-            <div class="red">
-                <p class="text-center pt-2 px-5">CURRENT</p>
-                <p id="current-p2" class="text-center"></p>
-             </div>
-        </div>
-        <div id="winner" class="announcement invisible">
-            WELCOME IN PARADICE !
-        </div>
+            <div class="card col-12 col-md-4 d-flex text-center border border-0 bg-transparent">
+                <div>
+                    <div id="name-p2" class="player my-0 my-md-3 d-inline-block">
+                        <span class="active-mark2 mark"></span>  
+                        <span id="pseudo-p2"></span>
+                        <!-- Trigger the modal with a button -->
+                        <button type="button" class="p-0 m-0 border border-0 bg-transparent pink edit-button2 position-absolute" data-bs-toggle="modal" data-bs-target="#pseudo2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                        </button>
+                       
+                    </div>
+                </div>
+                <div id="global-p2" class="pink text my-3"></div>
+                <div class="my-4">
+                    <div class="red d-inline-block px-5">
+                        <p class="text-center pt-2 px-2">CURRENT</p>
+                        <p id="current-p2" class="text-center"></p>
+                    </div>
+                </div>
+            </div>
+        </div></div>
     </main>
+    <!-- Modal 1-->
+    <div class="modal fade" tabindex="2" id="pseudo1" role="dialog" data-bs-backdrop="static" >
+        <div class="modal-dialog">
+            <!-- Modal 1 content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Player 1</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="pseudop1Input" placeholder="PLAYER 1">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-action="changePseudo1" data-player="p1" class="btn btn-default" data-bs-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Modal -->
+     <div class="modal fade" tabindex="2" id="pseudo2" role="dialog" data-bs-backdrop="static" >
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Player 2</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="pseudop2Input" placeholder="PLAYER 2">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-action="changePseudo2" data-player="p2" class="btn btn-default" data-bs-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="images/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/paraDice.js"></script>
     <script src="js/noAds.js"></script>
 </body>
