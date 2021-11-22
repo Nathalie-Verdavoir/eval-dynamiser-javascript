@@ -13,26 +13,26 @@ myButtonsHtml.forEach(myBtn => {
     })
 });
 
-const setContent = (target, text) => {
-    document.getElementById(target).textContent = text;
-}
+const setContent = (target, text) => document.getElementById(target).textContent = text;
 
-const getGameStat = (playerId, cat) => {
-    cat = cat || "current";
-    return gameStat[playerId][cat];
-}
+const getGameStat = (playerId, cat='current') => gameStat[playerId][cat];
 
 const newGame = () => {
     gameStat = {
         p1 :{
             global : 0,
             current : 0,
+            pseudo: 'PLAYER 1'
         },
         p2 :{
             global : 0,
             current : 0,
+            pseudo: 'PLAYER 2'
         }
     };
+    
+    setContent( "pseudo-p1", getGameStat('p1','pseudo'));
+    setContent( "pseudo-p2", getGameStat('p2','pseudo'));
     setContent( "global-p1", getGameStat('p1','global'));
     setContent( "global-p2", getGameStat('p2','global'));
     setContent( "current-p1", getGameStat('p1'));
@@ -80,10 +80,7 @@ const addTo = (howMany, toCounter, toPlayer) => {
     setContent( toCounter+'-'+toPlayer, getGameStat( toPlayer , toCounter ) );
 }
 
-const getActivePlayerId = () => {
-    return document.getElementById('name-p1').classList.contains('active')==true ?
-   'p1' : 'p2';
-}
+const getActivePlayerId = () => document.getElementById('name-p1').classList.contains('active') ? 'p1' : 'p2';
 
 const arrElementToActive = ["name-p1","name-p2","bg-p1","bg-p2"];
 
