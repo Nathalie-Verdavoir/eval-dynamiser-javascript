@@ -4,6 +4,16 @@
 /*--------20211116----------*/
 
 let gameStat = {};
+//sounds
+const rollingDiceSound = new Audio('./sounds/rolling-dice.mp3');
+rollingDiceSound.load();
+const pickedDiceSound = new Audio('./sounds/picked-dice.mp3');
+pickedDiceSound.load();
+const looserDiceSound = new Audio('./sounds/looser.mp3');
+looserDiceSound.load();
+const holdSound = new Audio('./sounds/hold.mp3');
+holdSound.load();
+
 
 const myButtonsHtml = document.querySelectorAll("button");
 
@@ -61,8 +71,8 @@ const newGame = () => {
 
 const roll = () => {
     let result = Math.floor(Math.random()*6)+1;
-    displayResult(result);
-    
+    animatedDice(result);
+    document.getElementById('roll').classList.add('disabled');
 };
 
 const dicesArray = document.getElementsByClassName("dice");
@@ -79,13 +89,15 @@ const displayResult = (result) => {
     //then add result to current score
     if(result==1){
         looserDice();
-    } else if(result!=0) {
+    } else if(result!=0) { 
+        pickedDiceSound.currentTime = 0; pickedDiceSound.play();
         addTo(result, 'current', getActivePlayerId());
         document.getElementById('hold').classList.remove('invisible');
     }
 };
 
 const looserDice = () => {
+    looserDiceSound.currentTime = 0; looserDiceSound.play();
     gameStat[getActivePlayerId()]['current']=0;
     setContent( 'current-'+getActivePlayerId(), getGameStat(getActivePlayerId()) );
     changeActivePlayer();
@@ -95,6 +107,16 @@ const addTo = (howMany, toCounter, toPlayer) => {
     if( toCounter==='global') {
         gameStat[toPlayer]["current"]=0; 
         setContent( 'current-'+toPlayer, 0);
+        document.getElementById('current-'+toPlayer).parentNode.classList.add('animatedScore'+toPlayer);
+        setTimeout(() => {
+            document.getElementById('current-'+toPlayer).parentNode.classList.remove('animatedScore'+toPlayer);
+            }, 4300);     
+    }
+    else {
+        document.getElementById('dice-'+howMany).parentNode.classList.add(toPlayer+'AddingDice');
+        setTimeout(() => {
+            document.getElementById('dice-'+howMany).parentNode.classList.remove(toPlayer+'AddingDice');
+            }, 300);   
     }
     gameStat[toPlayer][toCounter]+=howMany;
     setContent( toCounter+'-'+toPlayer, getGameStat( toPlayer , toCounter ) );
@@ -113,6 +135,7 @@ const changeActivePlayer = () => {
 
 const hold = () => {
     if ( getGameStat(getActivePlayerId()) > 0 ) {
+        holdSound.currentTime = 0; holdSound.play();
     addTo(getGameStat(getActivePlayerId()), 'global', getActivePlayerId());
     }
     if ( getGameStat(getActivePlayerId(),'global') >= 100 ) { 
@@ -125,4 +148,33 @@ const hold = () => {
 
 const toggleElement = (id) => document.getElementById(id).classList.toggle('invisible');
 
+const animatedDice = (result) => {
+    for(let loop=1;loop<5;loop++){
+        for(let dice=0;dice<7;dice++){
+            setTimeout(() => {
+                displayAnimated(dice);
+                }, 50*dice+loop*350); 
+        }
+    }
+    if(result){
+        rollingDiceSound.currentTime = 0; rollingDiceSound.play();
+        setTimeout(() => {
+        displayResult(result);
+        document.getElementById('roll').classList.remove('disabled');
+        rollingDiceSound.pause();
+        }, 1800);}
+}
+
+const displayAnimated = (dice) => {
+    //hide (with d-none) all of the svg of dices 
+    [...dicesArray]
+        .forEach( d => {
+            d.classList.add('d-none');
+        }) 
+    //and show the picked one 
+    let newDiceId = 'dice-'+dice;
+    document.getElementById(newDiceId).classList.remove('d-none');
+}
+
 newGame();
+animatedDice();
