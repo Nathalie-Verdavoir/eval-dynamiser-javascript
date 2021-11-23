@@ -13,7 +13,8 @@ const looserDiceSound = new Audio('./sounds/looser.mp3');
 looserDiceSound.load();
 const holdSound = new Audio('./sounds/hold.mp3');
 holdSound.load();
-
+const winnerSound = new Audio('./sounds/winner.mp3');
+winnerSound.load();
 
 const myButtonsHtml = document.querySelectorAll("button");
 
@@ -191,6 +192,7 @@ const displayWinner = (player) => {
 const setAnnouncementMessage = ( msg , el) => {
     if(el) {
         document.getElementById('winner').innerHTML= msg+el;
+        winnerSound.currentTime = 0; winnerSound.play();
     } else {
         setContent( 'winner', msg);
     }
