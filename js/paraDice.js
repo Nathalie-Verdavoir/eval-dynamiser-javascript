@@ -41,7 +41,7 @@ const getGameStat = (playerId, cat='current') => gameStat[playerId][cat];
 
 
 const newGame = () => { 
-
+    animatedDice();
     const pseudo1 = gameStat["p1"] ? getGameStat('p1','pseudo') : 'PLAYER 1';
     const pseudo2 = gameStat["p2"] ? getGameStat('p2','pseudo') : 'PLAYER 2';
 
@@ -57,7 +57,6 @@ const newGame = () => {
             pseudo: pseudo2,
         }
     };
-    
     setContent( "pseudo-p1", getGameStat('p1','pseudo'));
     setContent( "pseudo-p2", getGameStat('p2','pseudo'));
     setContent( "global-p1", getGameStat('p1','global'));
@@ -65,6 +64,7 @@ const newGame = () => {
     setContent( "current-p1", getGameStat('p1'));
     setContent( "current-p2", getGameStat('p2'));
     toggleElement('roll');
+    setAnnouncementMessage('WELCOME IN PARADICE !')
     document.getElementById('hold').classList.add('invisible');
     displayResult(0);
 }
@@ -139,8 +139,7 @@ const hold = () => {
     addTo(getGameStat(getActivePlayerId()), 'global', getActivePlayerId());
     }
     if ( getGameStat(getActivePlayerId(),'global') >= 100 ) { 
-        toggleElement('winner');
-        setContent( 'winner',  getGameStat(getActivePlayerId(),'pseudo')+' is the winner! Congrats!!!')
+        displayWinner(getActivePlayerId());
         } else {
         changeActivePlayer();
     }
@@ -176,5 +175,26 @@ const displayAnimated = (dice) => {
     document.getElementById(newDiceId).classList.remove('d-none');
 }
 
+const displayWinner = (player) => {
+    let msg = getGameStat(player,'pseudo')+' is the winner! Congrats!!!';
+    let el='';
+    for(f=1;f<7;f++){
+        el+= '<div class="firework" id="firework'+f+'">';
+        for(e=0;e<12;e++){
+            el+= '<div class="explosion"></div>';
+        }
+        el+='</div>';
+    }
+    setAnnouncementMessage(msg,el);
+}
+
+const setAnnouncementMessage = ( msg , el) => {
+    if(el) {
+        document.getElementById('winner').innerHTML= msg+el;
+    } else {
+        setContent( 'winner', msg);
+    }
+    toggleElement('winner');
+}
+
 newGame();
-animatedDice();
