@@ -13,7 +13,7 @@ for(let title in sounds) {
 }
 
 const muteSounds = () => {
-    for(let title of sounds) {console.log(title.volume);
+    for(let title of sounds) {
         title.volume = title.volume ? 0 : 1;
         document.querySelector(".mute").classList.toggle('notMuted');
     }
@@ -26,14 +26,16 @@ document.addEventListener('click', function (event) {
         eval(functionToCall);
 }, false);
 
-const changePseudo1 = () => {
-    gameStat["p1"]["pseudo"]= document.getElementById("pseudop1Input").value;
-    setContent( "pseudo-p1", getGameStat('p1','pseudo'));
-}
-
-const changePseudo2 = () => {
-    gameStat["p2"]["pseudo"]= document.getElementById("pseudop2Input").value;
-    setContent( "pseudo-p2", getGameStat('p2','pseudo'));
+const changePseudo = () => {
+    for (let i=1;i<3;i++) {
+        const playerId = 'p'+i;
+        const inputValue = document.getElementById("pseudo"+playerId+"Input").value;
+        if( inputValue != gameStat[playerId]["pseudo"] 
+         && inputValue !='' ) {
+            gameStat[playerId]["pseudo"] = inputValue;
+            setContent( "pseudo-"+playerId, getGameStat(playerId,'pseudo'));
+        }
+    }
 }
 
 const setContent = (target, text) => document.getElementById(target).textContent = text;
