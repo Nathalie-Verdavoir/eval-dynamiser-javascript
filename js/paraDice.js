@@ -16,7 +16,12 @@ holdSound.load();
 const winnerSound = new Audio('./sounds/winner.mp3');
 winnerSound.load();
 
-const myButtonsHtml = document.querySelectorAll("button");
+//add the event on every elements near the button (svg path included)
+document.addEventListener('click', function (event) {
+	if (!event.target.closest('.btn')) return;
+    let functionToCall = event.target.closest('.btn').getAttribute('data-action')+'()';
+        eval(functionToCall);
+}, false);
 
 const changePseudo1 = () => {
     gameStat["p1"]["pseudo"]= document.getElementById("pseudop1Input").value;
@@ -27,14 +32,6 @@ const changePseudo2 = () => {
     gameStat["p2"]["pseudo"]= document.getElementById("pseudop2Input").value;
     setContent( "pseudo-p2", getGameStat('p2','pseudo'));
 }
-
-myButtonsHtml.forEach(myBtn => {
-    myBtn.addEventListener('click', (e) => {
-        if(e.target.getAttribute('data-action')){
-        let functionToCall = e.target.getAttribute('data-action')+'()';
-        eval(functionToCall);}
-    })
-});
 
 const setContent = (target, text) => document.getElementById(target).textContent = text;
 
