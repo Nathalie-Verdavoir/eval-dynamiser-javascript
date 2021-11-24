@@ -1,7 +1,7 @@
 /*----- paraDice GAME ------*/
 /*---BY Nathalie Verdavoir--*/
 /*--------FOR STUDI---------*/
-/*--------20211116----------*/
+/*--------20211124----------*/
 
 let gameStat = {};
 
@@ -26,6 +26,20 @@ document.addEventListener('click', function (event) {
         eval(functionToCall);
 }, false);
 
+//getters and setters
+const setContent = (target, text) => document.getElementById(target).textContent = text;
+const getGameStat = (playerId, cat='current') => gameStat[playerId][cat];
+const toggleElement = (id) => document.getElementById(id).classList.toggle('invisible');
+const getActivePlayerId = () => document.getElementById('name-p1').classList.contains('active') ? 'p1' : 'p2';
+const arrElementToActive = ["name-p1","name-p2","bg-p1","bg-p2"];
+const changeActivePlayer = () => {
+    arrElementToActive.forEach(el => {
+        document.getElementById(el).classList.toggle("active"); 
+        document.getElementById('hold').classList.add('invisible');
+    })
+}
+const dicesArray = document.getElementsByClassName("dice");
+
 const changePseudo = () => {
     for (let i=1;i<3;i++) {
         const playerId = 'p'+i;
@@ -38,38 +52,30 @@ const changePseudo = () => {
     }
 }
 
-const setContent = (target, text) => document.getElementById(target).textContent = text;
-
-const getGameStat = (playerId, cat='current') => gameStat[playerId][cat];
-
-
+//games functions
 const newGame = () => { 
-    animatedDice();
-    const pseudo1 = gameStat["p1"] ? getGameStat('p1','pseudo') : 'PLAYER 1';
-    const pseudo2 = gameStat["p2"] ? getGameStat('p2','pseudo') : 'PLAYER 2';
-
+    animatedDice(); //kind of loading
     gameStat = {
         p1 :{
             global : 0,
             current : 0,
-            pseudo: pseudo1,
+            pseudo: gameStat["p1"] ? getGameStat('p1','pseudo') : 'PLAYER 1',
         },
         p2 :{
             global : 0,
             current : 0,
-            pseudo: pseudo2,
+            pseudo: gameStat["p2"] ? getGameStat('p2','pseudo') : 'PLAYER 2',
         }
     };
-    setContent( "pseudo-p1", getGameStat('p1','pseudo'));
-    setContent( "pseudo-p2", getGameStat('p2','pseudo'));
-    setContent( "global-p1", getGameStat('p1','global'));
-    setContent( "global-p2", getGameStat('p2','global'));
-    setContent( "current-p1", getGameStat('p1'));
-    setContent( "current-p2", getGameStat('p2'));
+    //Populate html
+    for (let player of Object.keys(gameStat)) {
+        for (let target of Object.keys(gameStat[player])) {
+            setContent( target+"-"+player, getGameStat(player,target));
+        }
+    }
     toggleElement('roll');
     setAnnouncementMessage('WELCOME IN PARADICE !')
     document.getElementById('hold').classList.add('invisible');
-    displayResult(0);
 }
 
 const roll = () => {
@@ -77,8 +83,6 @@ const roll = () => {
     animatedDice(result);
     document.getElementById('roll').classList.add('disabled');
 };
-
-const dicesArray = document.getElementsByClassName("dice");
 
 const displayResult = (result) => {
     //hide (with d-none) all of the svg of dices 
@@ -92,7 +96,7 @@ const displayResult = (result) => {
     //then add result to current score
     if(result==1){
         looserDice();
-    } else if(result!=0) { 
+    } else { 
         sounds[1].currentTime = 0; sounds[1].play();
         addTo(result, 'current', getActivePlayerId());
         document.getElementById('hold').classList.remove('invisible');
@@ -125,17 +129,6 @@ const addTo = (howMany, toCounter, toPlayer) => {
     setContent( toCounter+'-'+toPlayer, getGameStat( toPlayer , toCounter ) );
 }
 
-const getActivePlayerId = () => document.getElementById('name-p1').classList.contains('active') ? 'p1' : 'p2';
-
-const arrElementToActive = ["name-p1","name-p2","bg-p1","bg-p2"];
-
-const changeActivePlayer = () => {
-    arrElementToActive.forEach(el => {
-        document.getElementById(el).classList.toggle("active"); 
-        document.getElementById('hold').classList.add('invisible');
-    })
-}
-
 const hold = () => {
     if ( getGameStat(getActivePlayerId()) > 0 ) {
         sounds[3].currentTime = 0; sounds[3].play();
@@ -148,10 +141,9 @@ const hold = () => {
     }
 }
 
-const toggleElement = (id) => document.getElementById(id).classList.toggle('invisible');
-
+//animations
 const animatedDice = (result) => {
-    for(let loop=1;loop<5;loop++){
+    for(let loop=1;loop<4;loop++){
         for(let dice=0;dice<7;dice++){
             setTimeout(() => {
                 displayAnimated(dice);
@@ -164,7 +156,7 @@ const animatedDice = (result) => {
         displayResult(result);
         document.getElementById('roll').classList.remove('disabled');
         sounds[0].pause();
-        }, 1800);}
+        }, 1400);}
 }
 
 const displayAnimated = (dice) => {
