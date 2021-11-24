@@ -4,17 +4,20 @@
 /*--------20211116----------*/
 
 let gameStat = {};
+
 //sounds
-const rollingDiceSound = new Audio('./sounds/rolling-dice.mp3');
-rollingDiceSound.load();
-const pickedDiceSound = new Audio('./sounds/picked-dice.mp3');
-pickedDiceSound.load();
-const looserDiceSound = new Audio('./sounds/looser.mp3');
-looserDiceSound.load();
-const holdSound = new Audio('./sounds/hold.mp3');
-holdSound.load();
-const winnerSound = new Audio('./sounds/winner.mp3');
-winnerSound.load();
+let sounds = ["rollingDiceSound" , "pickedDiceSound" , "looserDiceSound" , "holdSound" , "winnerSound"];
+for(let title in sounds) {
+    sounds[title] = new Audio('./sounds/'+sounds[title]+'.mp3');
+    sounds[title].load();
+}
+
+const muteSounds = () => {
+    for(let title of sounds) {console.log(title.volume);
+        title.volume = title.volume ? 0 : 1;
+        document.querySelector(".mute").classList.toggle('notMuted');
+    }
+}
 
 //add the event on every elements near the button (svg path included)
 document.addEventListener('click', function (event) {
@@ -88,14 +91,14 @@ const displayResult = (result) => {
     if(result==1){
         looserDice();
     } else if(result!=0) { 
-        pickedDiceSound.currentTime = 0; pickedDiceSound.play();
+        sounds[1].currentTime = 0; sounds[1].play();
         addTo(result, 'current', getActivePlayerId());
         document.getElementById('hold').classList.remove('invisible');
     }
 };
 
 const looserDice = () => {
-    looserDiceSound.currentTime = 0; looserDiceSound.play();
+    sounds[2].currentTime = 0; sounds[2].play();
     gameStat[getActivePlayerId()]['current']=0;
     setContent( 'current-'+getActivePlayerId(), getGameStat(getActivePlayerId()) );
     changeActivePlayer();
@@ -133,7 +136,7 @@ const changeActivePlayer = () => {
 
 const hold = () => {
     if ( getGameStat(getActivePlayerId()) > 0 ) {
-        holdSound.currentTime = 0; holdSound.play();
+        sounds[3].currentTime = 0; sounds[3].play();
     addTo(getGameStat(getActivePlayerId()), 'global', getActivePlayerId());
     }
     if ( getGameStat(getActivePlayerId(),'global') >= 100 ) { 
@@ -154,11 +157,11 @@ const animatedDice = (result) => {
         }
     }
     if(result){
-        rollingDiceSound.currentTime = 0; rollingDiceSound.play();
+        sounds[0].currentTime = 0; sounds[0].play();
         setTimeout(() => {
         displayResult(result);
         document.getElementById('roll').classList.remove('disabled');
-        rollingDiceSound.pause();
+        sounds[0].pause();
         }, 1800);}
 }
 
@@ -189,7 +192,7 @@ const displayWinner = (player) => {
 const setAnnouncementMessage = ( msg , el) => {
     if(el) {
         document.getElementById('winner').innerHTML= msg+el;
-        winnerSound.currentTime = 0; winnerSound.play();
+        sounds[4].currentTime = 0; sounds[4].play();
     } else {
         setContent( 'winner', msg);
     }
