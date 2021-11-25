@@ -185,8 +185,8 @@ svg.pink {
     }
 }
 
-.animatedScorep1,
-.animatedScorep2 {
+.p1AnimatedScore,
+.p2AnimatedScore {
     animation: anime-score 0.3s linear ;
 }
  
@@ -215,12 +215,12 @@ svg.pink {
         --mov-Y-small: 7vh;
     }
 
-    .animatedScorep1,
+    .p1AnimatedScore,
     .p1AddingDice {
         animation: small-p1 0.3s linear ;
     }
 
-    .animatedScorep2, 
+    .p2AnimatedScore, 
     .p2AddingDice {
         animation: small-p2 0.3s linear ;
     }

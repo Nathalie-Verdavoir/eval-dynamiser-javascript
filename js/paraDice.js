@@ -19,6 +19,11 @@ const muteSounds = () => {
     }
 }
 
+const resetPlaySound = s => {
+    sounds[s].currentTime = 0; 
+    sounds[s].play();
+}
+
 //add the event on every elements near the button (svg path included)
 document.addEventListener('click', function (event) {
 	if (!event.target.closest('.btn')) return;
@@ -28,16 +33,24 @@ document.addEventListener('click', function (event) {
 
 //getters and setters
 const setContent = (target, text) => document.getElementById(target).textContent = text;
+
+const getClassList = el => document.getElementById(el).classList;
+
 const getGameStat = (playerId, cat='current') => gameStat[playerId][cat];
-const toggleElement = (id) => document.getElementById(id).classList.toggle('invisible');
-const getActivePlayerId = () => document.getElementById('name-p1').classList.contains('active') ? 'p1' : 'p2';
+
+const toggleElement = id => getClassList(id).toggle('invisible');
+
+const getActivePlayerId = () =>getClassList('name-p1').contains('active') ? 'p1' : 'p2';
+
 const arrElementToActive = ["name-p1","name-p2","bg-p1","bg-p2"];
+
 const changeActivePlayer = () => {
     arrElementToActive.forEach(el => {
-        document.getElementById(el).classList.toggle("active"); 
-        document.getElementById('hold').classList.add('invisible');
-    })
+        getClassList(el).toggle("active"); 
+    });
+    getClassList('hold').add('invisible');
 }
+
 const dicesArray = document.getElementsByClassName("dice");
 
 const changePseudo = () => {
@@ -54,7 +67,6 @@ const changePseudo = () => {
 
 //games functions
 const newGame = () => { 
-    animatedDice(); //kind of loading
     gameStat = {
         p1 :{
             global : 0,
@@ -75,13 +87,13 @@ const newGame = () => {
     }
     toggleElement('roll');
     setAnnouncementMessage('WELCOME IN PARADICE !')
-    document.getElementById('hold').classList.add('invisible');
+    getClassList('hold').add('invisible');
 }
 
 const roll = () => {
     let result = Math.floor(Math.random()*6)+1;
     animatedDice(result);
-    document.getElementById('roll').classList.add('disabled');
+    getClassList('roll').add('disabled');
 };
 
 const displayResult = (result) => {
@@ -92,19 +104,19 @@ const displayResult = (result) => {
         }) 
     //and show the picked one 
     let newDiceId = 'dice-'+result;
-    document.getElementById(newDiceId).classList.remove('d-none');
+    getClassList(newDiceId).remove('d-none');
     //then add result to current score
     if(result==1){
         looserDice();
     } else { 
-        sounds[1].currentTime = 0; sounds[1].play();
+        resetPlaySound(1);
         addTo(result, 'current', getActivePlayerId());
-        document.getElementById('hold').classList.remove('invisible');
+        getClassList('hold').remove('invisible');
     }
 };
 
 const looserDice = () => {
-    sounds[2].currentTime = 0; sounds[2].play();
+    resetPlaySound(2);
     gameStat[getActivePlayerId()]['current']=0;
     setContent( 'current-'+getActivePlayerId(), getGameStat(getActivePlayerId()) );
     changeActivePlayer();
@@ -114,25 +126,27 @@ const addTo = (howMany, toCounter, toPlayer) => {
     if( toCounter==='global') {
         gameStat[toPlayer]["current"]=0; 
         setContent( 'current-'+toPlayer, 0);
-        document.getElementById('current-'+toPlayer).parentNode.classList.add('animatedScore'+toPlayer);
-        setTimeout(() => {
-            document.getElementById('current-'+toPlayer).parentNode.classList.remove('animatedScore'+toPlayer);
-            }, 4300);     
+        toggleAnimation('current-'+toPlayer, toPlayer+'AnimatedScore');
     }
-    else {
-        document.getElementById('dice-'+howMany).parentNode.classList.add(toPlayer+'AddingDice');
-        setTimeout(() => {
-            document.getElementById('dice-'+howMany).parentNode.classList.remove(toPlayer+'AddingDice');
-            }, 300);   
+    else { 
+        toggleAnimation('dice-'+howMany, toPlayer+'AddingDice'); 
     }
     gameStat[toPlayer][toCounter]+=howMany;
     setContent( toCounter+'-'+toPlayer, getGameStat( toPlayer , toCounter ) );
 }
 
+const toggleAnimation = (el, animation) => {
+    const classParentEl = document.getElementById(el)
+                            .parentNode
+                            .classList;
+    classParentEl.add(animation);
+    setTimeout(() => {classParentEl.remove(animation)}, 300);
+}
+
 const hold = () => {
     if ( getGameStat(getActivePlayerId()) > 0 ) {
-        sounds[3].currentTime = 0; sounds[3].play();
-    addTo(getGameStat(getActivePlayerId()), 'global', getActivePlayerId());
+        resetPlaySound(3);
+        addTo(getGameStat(getActivePlayerId()), 'global', getActivePlayerId());
     }
     if ( getGameStat(getActivePlayerId(),'global') >= 100 ) { 
         displayWinner(getActivePlayerId());
@@ -142,7 +156,7 @@ const hold = () => {
 }
 
 //animations
-const animatedDice = (result) => {
+const animatedDice = result => {
     for(let loop=1;loop<4;loop++){
         for(let dice=0;dice<7;dice++){
             setTimeout(() => {
@@ -150,13 +164,13 @@ const animatedDice = (result) => {
                 }, 50*dice+loop*350); 
         }
     }
-    if(result){
-        sounds[0].currentTime = 0; sounds[0].play();
-        setTimeout(() => {
+    resetPlaySound(0);
+    setTimeout(() => {
         displayResult(result);
-        document.getElementById('roll').classList.remove('disabled');
+        getClassList('roll').remove('disabled');
         sounds[0].pause();
-        }, 1400);}
+    },
+    1500);
 }
 
 const displayAnimated = (dice) => {
@@ -167,7 +181,7 @@ const displayAnimated = (dice) => {
         }) 
     //and show the picked one 
     let newDiceId = 'dice-'+dice;
-    document.getElementById(newDiceId).classList.remove('d-none');
+    getClassList(newDiceId).remove('d-none');
 }
 
 const displayWinner = (player) => {
@@ -186,7 +200,7 @@ const displayWinner = (player) => {
 const setAnnouncementMessage = ( msg , el) => {
     if(el) {
         document.getElementById('winner').innerHTML= msg+el;
-        sounds[4].currentTime = 0; sounds[4].play();
+        resetPlaySound(4);
     } else {
         setContent( 'winner', msg);
     }
