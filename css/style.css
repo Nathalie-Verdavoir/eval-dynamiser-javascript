@@ -210,7 +210,7 @@ svg.pink {
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
     :root {
         --mov-Y-small: 7vh;
     }
@@ -239,7 +239,7 @@ svg.pink {
         transform: translate3d(0,0,0);
     }
     50% {
-        transform: scale(0.5) translate3d(-30vw, 40vh, 1000px);
+        transform: scale(0.5) translate3d(-30vw, 30vh, 1000px);
     }
     100% {
         transform: translate3d(0,0,0);
@@ -251,7 +251,7 @@ svg.pink {
         transform: translate3d(0,0,0);
     }
     50% {
-        transform: scale(0.5) translate3d(30vw, 40vh, 1000px);
+        transform: scale(0.5) translate3d(30vw, 30vh, 1000px);
     }
     100% {
         transform: translate3d(0,0,0);
