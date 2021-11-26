@@ -205,10 +205,16 @@ const setAnnouncementMessage = ( msg , el) => {
     if(el) {
         document.getElementById('winner').innerHTML= msg+el;
         resetPlaySound(4);
+        toggleElement('roll');toggleElement('hold');
     } else {
         setContent( 'winner', msg);
     }
     toggleElement('winner');
 }
+
+const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  new bootstrap.Tooltip(tooltipTriggerEl);
+});
 
 newGame();

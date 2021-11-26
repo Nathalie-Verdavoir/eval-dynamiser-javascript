@@ -18,6 +18,27 @@ body {
     color: var(--color-grey);
 }
 
+.bs-tooltip-bottom .tooltip-arrow::before, .bs-tooltip-auto[data-popper-placement^=bottom] .tooltip-arrow::before {
+    border-width: 0rem 0.5rem 0.5rem 0.5rem;
+    border-bottom-color: var(--color-pink);
+}
+.bs-tooltip-top .tooltip-arrow::before, .bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before {
+    border-width: 0.5rem 0.5rem 0 0.5rem;
+    border-top-color: var(--color-pink);
+}
+.bs-tooltip-end .tooltip-arrow::before, .bs-tooltip-auto[data-popper-placement^=right] .tooltip-arrow::before {
+    border-width: 0.5rem 0.5rem 0.5rem 0;
+    border-right-color: var(--color-pink);
+}
+.tooltip-inner {
+    font-size: 1.5em;
+    opacity: 1;
+    color: var(--color-grey);
+    border: var(--color-pink) solid 2px;
+    background-color: var(--color-white);
+    border-radius: 12px;
+}
+  
 .game-block,
 .new-game {
     position: absolute;
@@ -33,6 +54,11 @@ body {
 
 .game-block {
     top:11vh;
+}
+
+.card {
+    background-color: transparent;
+          border: none;
 }
 
 .card-player {
@@ -117,6 +143,7 @@ svg.pink {
 .edit-button1 {
     left: -20px;
 }
+
 .edit-button2 {
     right: -20px;
 }
