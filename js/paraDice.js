@@ -6,16 +6,20 @@
 let gameStat = {};
 
 //sounds
-let sounds = ["rollingDiceSound" , "pickedDiceSound" , "looserDiceSound" , "holdSound" , "winnerSound"];
-for(let title in sounds) {
-    sounds[title] = new Audio('./sounds/'+sounds[title]+'.mp3');
+const titles = ["rollingDiceSound" , "pickedDiceSound" , "looserDiceSound" , "holdSound" , "winnerSound"];
+let sounds = [];
+for(let title in titles) {
+    sounds[title] = new Audio('./sounds/'+titles[title]+'.mp3');
     sounds[title].load();
 }
 
 const muteSounds = () => {
     for(let title of sounds) {
         title.volume = title.volume ? 0 : 1;
-        document.querySelector(".mute").classList.toggle('notMuted');
+        document.querySelectorAll(".bi-volume-mute")
+            .forEach( d => {
+                d.classList.toggle('d-none');
+        })
     }
 }
 
@@ -96,7 +100,7 @@ const roll = () => {
     getClassList('roll').add('disabled');
 };
 
-const displayResult = (result) => {
+const displayResult = result => {
     //hide (with d-none) all of the svg of dices 
     [...dicesArray]
         .forEach( d => {
