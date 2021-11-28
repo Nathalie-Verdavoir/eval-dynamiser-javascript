@@ -62,7 +62,7 @@ const changePseudo = player => {
         const inputValue = document.getElementById("pseudo"+player+"Input").value;
         if( inputValue != '' ) {
             gameStat[player]["pseudo"] = inputValue;
-            setContent( "pseudo-"+player, getGameStat(player,'pseudo'));
+            setContent( "pseudo-"+player, inputValue);
         }
 }
 
@@ -81,9 +81,9 @@ const newGame = () => {
         }
     };
     //Populate html
-    for (let player of Object.keys(gameStat)) {
-        for (let target of Object.keys(gameStat[player])) {
-            setContent( target+"-"+player, getGameStat(player,target));
+    for (let [player,stat] of Object.entries(gameStat)) {
+        for (let [target,value] of Object.entries(stat)) {
+            setContent( target+"-"+player, value);
         }
     }
     //show roll button
@@ -119,7 +119,7 @@ const displayResult = result => {
 const looserDice = () => {
     resetPlaySound(2);
     gameStat[getActivePlayerId()]['current']=0;
-    setContent( 'current-'+getActivePlayerId(), getGameStat(getActivePlayerId()) );
+    setContent( 'current-'+getActivePlayerId(), 0 );
     changeActivePlayer();
 }
 
@@ -159,7 +159,7 @@ const toggleAnimation = (el, animation) => {
 }
 
 const animatedDice = result => {
-    for(let loop=1;loop<4;loop++){
+    for(let loop=0;loop<3;loop++){
         for(let dice=0;dice<7;dice++){
             setTimeout(() => {
                 displayAnimated(dice);
@@ -171,7 +171,7 @@ const animatedDice = result => {
         displayResult(result);
         getClassList('roll').remove('disabled');
         sounds[0].pause();
-    }, 1500 );
+    }, 1050 );
 }
 
 const displayAnimated = (dice) => {
