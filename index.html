@@ -17,7 +17,7 @@
         <div id="bg-p2" class="p-1"></div>
     </div>
     <main>
-        <div id="winner" class="announcement invisible"></div>
+       
         <header class="d-flex justify-content-center pt-3 position-absolute new-game">
             <div class="d-flex">
                 <button data-action="muteSounds" class="btn mute notMuted">
@@ -217,15 +217,15 @@
                         </span>
                         <span class="text-nowrap me-2">Roll dice</span>
                         <span class="lh-1 accolade">&#123;</span> 
-                        <div class="d-block flex-row align-self-end m-0">
-                            <span class="d-flex ">
+                        <div class="d-block flex-row align-self-end m-0 dice-schedule">
+                            <span class="d-flex align-items-center">
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="svg-demo bi bi-dice-1" viewBox="0 0 16 16">
                                         <circle class="dice-dots" cx="8" cy="8" r="1.5"/>
                                         <path class="dice-dots" d="M13 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h10zM3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3z"/>
                                       </svg>
                                 </span>
-                                <span class="px-2">You loose and the next player plays.</span>
+                                <span class="px-2">You loose!</span>
                             </span>
                             <div class="d-flex align-items-center mt-2">
                                 <div class="d-flex flex-column align-items-center">
@@ -254,7 +254,7 @@
                                         </svg>
                                     </div>
                                 </div>
-                                <span class="col px-2 ">You win and you can play again or hold your current score.</span>
+                                <span class="col px-2">You win! Play again or hold your current score.</span>
                             </div>
                         </div>
                     </div>
@@ -263,7 +263,7 @@
                             <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/>
                             <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
                         </svg>
-                        Hold
+                        Hold your current score.
                     </p>
                     <p>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="pink bi bi-plus-lg" viewBox="0 0 16 16">
@@ -283,6 +283,95 @@
                 <footer class="modal-footer">
                     <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
                 </footer>
+            </div>
+        </div>
+    </div>
+    <div id="announcement" class="announcement">
+        <div id="welcome">WELCOME IN PARADICE !</div>
+        <div id="winner" class="d-none"><span id="winnerName"></span> is the winner! Congrats!!!
+            <div id="firework1"class="firework">
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+            </div>
+            <div id="firework2"class="firework">
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+            </div>
+            <div id="firework3"class="firework">
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+            </div>
+            <div id="firework4"class="firework">
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+            </div>
+            <div id="firework5"class="firework">
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+            </div>
+            <div id="firework6"class="firework">
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
+                <div class="explosion"></div>
             </div>
         </div>
     </div>
