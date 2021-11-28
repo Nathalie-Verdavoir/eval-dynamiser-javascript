@@ -97,6 +97,7 @@ const roll = () => {
     let result = Math.floor(Math.random()*6)+1;
     animatedDice(result);
     getClassList('roll').add('disabled');
+    getClassList('hold').add('disabled');
 };
 
 const displayResult = result => {
@@ -133,6 +134,7 @@ const addTo = (howMany, toCounter, toPlayer) => {
     }
     gameStat[toPlayer][toCounter]+=howMany;
     setContent( toCounter+'-'+toPlayer, getGameStat( toPlayer , toCounter ) );
+    getClassList('hold').remove('disabled');
 }
 
 const hold = () => {
