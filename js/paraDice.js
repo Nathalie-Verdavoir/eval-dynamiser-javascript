@@ -9,17 +9,15 @@ let gameStat = {};
 const titles = ["rollingDiceSound" , "pickedDiceSound" , "looserDiceSound" , "holdSound" , "winnerSound"];
 let sounds = [];
 for(let title in titles) {
-    sounds[title] = new Audio('./sounds/'+titles[title]+'.mp3');
+    sounds.push(new Audio('./sounds/'+titles[title]+'.mp3'));
     sounds[title].load();
 }
 
 const muteSounds = () => {
     for(let title of sounds) {
         title.volume = title.volume ? 0 : 1;
-        document.querySelectorAll(".bi-volume-mute")
-            .forEach( d => {
-                d.classList.toggle('d-none');
-        })
+        [...document.querySelectorAll(".bi-volume-mute")]
+            .map( d => d.classList.toggle('d-none'));
     }
 }
 
@@ -29,10 +27,15 @@ const resetPlaySound = s => {
 }
 
 //add the event on every elements near the button (svg path included)
-document.addEventListener('click', function (event) {
-	if (!event.target.closest('.btn')) return;
-    let functionToCall = event.target.closest('.btn').getAttribute('data-action')+'()';
-        eval(functionToCall);
+document.addEventListener('click', event => {
+    const el = event.target.closest('.btn');
+	if (!el) return;
+    if(el.getAttribute('data-action')){
+        const player = event.path[0].getAttribute("data-player") ? event.path[0].getAttribute("data-player") : '';
+        const action = el.getAttribute('data-action');
+        const functionToCall = `${action}('${player}')`;
+        eval(functionToCall);  
+    }   
 }, false);
 
 //getters and setters
@@ -49,24 +52,18 @@ const getActivePlayerId = () =>getClassList('name-p1').contains('active') ? 'p1'
 const arrElementToActive = ["name-p1","name-p2","bg-p1","bg-p2"];
 
 const changeActivePlayer = () => {
-    arrElementToActive.forEach(el => {
-        getClassList(el).toggle("active"); 
-    });
+    arrElementToActive.map(el => getClassList(el).toggle("active"));
     getClassList('hold').add('invisible');
 }
 
 const dicesArray = document.getElementsByClassName("dice");
 
-const changePseudo = () => {
-    for (let i=1;i<3;i++) {
-        const playerId = 'p'+i;
-        const inputValue = document.getElementById("pseudo"+playerId+"Input").value;
-        if( inputValue != gameStat[playerId]["pseudo"] 
-         && inputValue !='' ) {
-            gameStat[playerId]["pseudo"] = inputValue;
-            setContent( "pseudo-"+playerId, getGameStat(playerId,'pseudo'));
+const changePseudo = player => {
+        const inputValue = document.getElementById("pseudo"+player+"Input").value;
+        if( inputValue != '' ) {
+            gameStat[player]["pseudo"] = inputValue;
+            setContent( "pseudo-"+player, getGameStat(player,'pseudo'));
         }
-    }
 }
 
 //games functions
@@ -89,8 +86,10 @@ const newGame = () => {
             setContent( target+"-"+player, getGameStat(player,target));
         }
     }
+    //show roll button
     toggleElement('roll');
-    setAnnouncementMessage('WELCOME IN PARADICE !')
+    //hide announcement and hold button
+    getClassList('winner').add('d-none');
     getClassList('hold').add('invisible');
 }
 
@@ -102,10 +101,7 @@ const roll = () => {
 
 const displayResult = result => {
     //hide (with d-none) all of the svg of dices 
-    [...dicesArray]
-        .forEach( d => {
-            d.classList.add('d-none');
-        }) 
+    [...dicesArray].map( d => d.classList.add('d-none'));
     //and show the picked one 
     let newDiceId = 'dice-'+result;
     getClassList(newDiceId).remove('d-none');
@@ -139,14 +135,6 @@ const addTo = (howMany, toCounter, toPlayer) => {
     setContent( toCounter+'-'+toPlayer, getGameStat( toPlayer , toCounter ) );
 }
 
-const toggleAnimation = (el, animation) => {
-    const classParentEl = document.getElementById(el)
-                            .parentNode
-                            .classList;
-    classParentEl.add(animation);
-    setTimeout(() => {classParentEl.remove(animation)}, 300);
-}
-
 const hold = () => {
     if ( getGameStat(getActivePlayerId()) > 0 ) {
         resetPlaySound(3);
@@ -160,6 +148,14 @@ const hold = () => {
 }
 
 //animations
+const toggleAnimation = (el, animation) => {
+    const classParentEl = document.getElementById(el)
+                            .parentNode
+                            .classList;
+    classParentEl.add(animation);
+    setTimeout(() => {classParentEl.remove(animation)}, 300);
+}
+
 const animatedDice = result => {
     for(let loop=1;loop<4;loop++){
         for(let dice=0;dice<7;dice++){
@@ -173,43 +169,20 @@ const animatedDice = result => {
         displayResult(result);
         getClassList('roll').remove('disabled');
         sounds[0].pause();
-    },
-    1500);
+    }, 1500 );
 }
 
 const displayAnimated = (dice) => {
     //hide (with d-none) all of the svg of dices 
-    [...dicesArray]
-        .forEach( d => {
-            d.classList.add('d-none');
-        }) 
+    [...dicesArray].map( d => d.classList.add('d-none'));
     //and show the picked one 
     let newDiceId = 'dice-'+dice;
     getClassList(newDiceId).remove('d-none');
 }
 
 const displayWinner = (player) => {
-    let msg = getGameStat(player,'pseudo')+' is the winner! Congrats!!!';
-    let el='';
-    for(f=1;f<7;f++){
-        el+= '<div class="firework" id="firework'+f+'">';
-        for(e=0;e<12;e++){
-            el+= '<div class="explosion"></div>';
-        }
-        el+='</div>';
-    }
-    setAnnouncementMessage(msg,el);
-}
-
-const setAnnouncementMessage = ( msg , el) => {
-    if(el) {
-        document.getElementById('winner').innerHTML= msg+el;
-        resetPlaySound(4);
-        toggleElement('roll');toggleElement('hold');
-    } else {
-        setContent( 'winner', msg);
-    }
-    toggleElement('winner');
+    setContent('winnerName', getGameStat(player,'pseudo'));
+    getClassList('winner').toggle('d-none');
 }
 
 const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -217,4 +190,8 @@ const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   new bootstrap.Tooltip(tooltipTriggerEl);
 });
 
+//first loading
 newGame();
+setTimeout(() => {
+    getClassList('welcome').add('d-none');
+}, 30000);
