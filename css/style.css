@@ -267,6 +267,11 @@ svg.pink {
     .card-dice {
         height: 8vh;
     }
+
+    .dice-schedule {
+        line-height: 0.8;
+        font-size: 0.8rem;
+    }
  }
 
 @keyframes dice-p1 {
