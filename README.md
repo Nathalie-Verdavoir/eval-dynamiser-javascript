@@ -1,5 +1,7 @@
 ## eval-dynamiser-javascript
 
+[![SymfonyInsight](https://insight.symfony.com/projects/e465e26f-ce8c-45a9-93f3-c54b3471d27e/big.svg)](https://insight.symfony.com/projects/e465e26f-ce8c-45a9-93f3-c54b3471d27e)
+
 [Accéder à l'application en ligne](https://nverdavoir.orgfree.com/eval-dynamiser-javascript/index.html)
 
 #Mon jeu de dés "paraDice" en html/css/js aidé de bootstrap ;)
